@@ -51,6 +51,11 @@ extern USBD_ClassTypeDef USBD_GS_CAN;
 # define USB_INTERRUPT   USB_IRQn
 # define CAN_INTERFACE   CAN
 # define CAN_CLOCK_SPEED 48000000
+#elif defined(STM32F3)
+# define USB_INTERFACE   USB
+# define USB_INTERRUPT   USB_LP_IRQn
+# define CAN_INTERFACE   CAN
+# define CAN_CLOCK_SPEED 48000000
 #elif defined(STM32F4)
 # define USB_INTERFACE   USB_OTG_FS
 # define USB_INTERRUPT   OTG_FS_IRQn

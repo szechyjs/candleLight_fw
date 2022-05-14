@@ -164,6 +164,26 @@ THE SOFTWARE.
 
 	#define DCDCEN_Port GPIOC
 	#define DCDCEN_Pin GPIO_PIN_15		/* activate DCDC converter, active high */
+#elif defined(BOARD_STM32F3_Discovery)
+	#define USBD_PRODUCT_STRING_FS		(uint8_t*) "STM32F3 Discovery gs_usb"
+	#define USBD_MANUFACTURER_STRING	(uint8_t*) "STMicroelectronics"
+	#define DFU_INTERFACE_STRING_FS		(uint8_t*) "STM32F3 Discovery firmware upgrade interface"
+
+	// SILENT pin not connected
+
+	#define LED1_GPIO_Port GPIOE
+	#define LED1_Pin GPIO_PIN_15	/* green */
+	#define LED1_Mode GPIO_MODE_OUTPUT_PP
+	#define LED1_Active_High 1
+
+	#define LED2_GPIO_Port GPIOE
+	#define LED2_Pin GPIO_PIN_9	/* red */
+	#define LED2_Mode GPIO_MODE_OUTPUT_PP
+	#define LED2_Active_High 1
+
+	#define USB_GPIO_Port	 GPIOA
+	#define USB_Pin_DM		 GPIO_PIN_11
+	#define USB_Pin_DP		 GPIO_PIN_12
 #elif defined(BOARD_STM32F4_DevBoard)
 	#define USBD_PRODUCT_STRING_FS	 (uint8_t*) "STM32F4VE Dev Board"
 	#define USBD_MANUFACTURER_STRING (uint8_t*) "misc"

@@ -19,11 +19,12 @@ add_compile_options(
 
 #need these later, per-platform
 set(CPUFLAGS_F0 -mcpu=cortex-m0)
+set(CPUFLAGS_F3 -mcpu=cortex-m4)
 set(CPUFLAGS_F4 -mcpu=cortex-m4)
 
 add_link_options(
     -mthumb -Wall -Wextra -g3
-    -Xlinker --gc-sections 
+    -Xlinker --gc-sections
     --specs=nano.specs
     --specs=nosys.specs
 )
@@ -146,6 +147,20 @@ function(add_f072_target TGTNAME)
     show_object_size(${TGTNAME}_fw)
 endfunction()
 
+function(add_f303_target TGTNAME)
+    add_executable(${TGTNAME}_fw ${SOURCE_FILES})
+    add_dependencies(${TGTNAME}_fw version_h)
+    target_include_directories(${TGTNAME}_fw PRIVATE include/ ${CMAKE_CURRENT_BINARY_DIR})
+    target_compile_options(${TGTNAME}_fw BEFORE PRIVATE ${CPUFLAGS_F3})
+    target_compile_definitions(${TGTNAME}_fw PRIVATE BOARD_${TGTNAME} STM32F3)
+    target_link_options(${TGTNAME}_fw BEFORE PRIVATE ${CPUFLAGS_F3})
+    target_link_options(${TGTNAME}_fw PRIVATE -T ${CMAKE_SOURCE_DIR}/ldscripts/STM32F303XC.ld)
+    target_link_libraries(${TGTNAME}_fw PRIVATE STM32_HAL_STM32F303xC STM32_USB_Device_Library_STM32F303xC)
+    make_bin_file(${TGTNAME}_fw)
+    dfu_flash(${TGTNAME}_fw)
+    show_object_size(${TGTNAME}_fw)
+endfunction()
+
 function(add_f407_target TGTNAME)
 	add_executable(${TGTNAME}_fw ${SOURCE_FILES})
 	add_dependencies(${TGTNAME}_fw version_h)
@@ -164,6 +179,7 @@ endfunction()
 # the "_fw" part is appended automatically
 set(TGT042_LIST "cantact" "canalyze" "canable" "usb2can" "cannette")
 set(TGT072_LIST "candleLight")
+set(TGT303_LIST "STM32F3_Discovery")
 set(TGT407_LIST "STM32F4_DevBoard")
 
 
@@ -178,6 +194,13 @@ foreach (TGTNAME IN LISTS TGT072_LIST)
 	option(BUILD_${TGTNAME} "Build firmware for \"${TGTNAME}\" (default=yes)" ON)
 	if (BUILD_${TGTNAME})
 		add_f072_target(${TGTNAME})
+	endif()
+endforeach()
+
+foreach (TGTNAME IN LISTS TGT303_LIST)
+	option(BUILD_${TGTNAME} "Build firmware for \"${TGTNAME}\" (default=yes)" ON)
+	if (BUILD_${TGTNAME})
+		add_f303_target(${TGTNAME})
 	endif()
 endforeach()
 

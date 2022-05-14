@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #define SYSMEM_STM32F042 0x1FFFC400
 #define SYSMEM_STM32F072 0x1FFFC800
+// #define SYSMEM_STM32F303 0x1FFFD000 // TODO:
 
 static uint32_t dfu_reset_to_bootloader_magic;
 

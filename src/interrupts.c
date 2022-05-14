@@ -117,6 +117,108 @@ const pFunc InterruptVectorTable[48] = {
     USB_Handler, // int 31: USB
 };
 
+#elif defined(STM32F3)
+__attribute__((used, section(".vectors")))
+const pFunc InterruptVectorTable[98] = {
+    (pFunc)(&__StackTop),   // initial stack pointer
+    Reset_Handler,
+    NMI_Handler,
+    HardFault_Handler,
+    0,                      // MemManage_Handler
+    0,                      // BusFault_Handler
+    0,                      // UsageFault_Handler
+    0,
+    0,
+    0,
+    0,
+    0,                      // SVC_Handler
+    0,                      // DebugMon_Handler
+    0,
+    0,                      // PendSV_Handler
+    SysTick_Handler,
+    0,                      // WWDG_IRQHandler
+    0,                      // PVD_IRQHandler
+    0,                      // TAMP_STAMP_IRQHandler
+    0,                      // RTC_WKUP_IRQHandler
+    0,                      // FLASH_IRQHandler
+    0,                      // RCC_IRQHandler
+    0,                      // EXTI0_IRQHandler
+    0,                      // EXTI1_IRQHandler
+    0,                      // EXTI2_TSC_IRQHandler
+    0,                      // EXTI3_IRQHandler
+    0,                      // EXTI4_IRQHandler
+    0,                      // DMA1_Channel1_IRQHandler
+    0,                      // DMA1_Channel2_IRQHandler
+    0,                      // DMA1_Channel3_IRQHandler
+    0,                      // DMA1_Channel4_IRQHandler
+    0,                      // DMA1_Channel5_IRQHandler
+    0,                      // DMA1_Channel6_IRQHandler
+    0,                      // DMA1_Channel7_IRQHandler
+    0,                      // ADC1_2_IRQHandler
+    0,                      // USB_HP_CAN_TX_IRQHandler
+    0,                      // USB_LP_CAN_RX0_IRQHandler
+    0,                      // CAN_RX1_IRQHandler
+    0,                      // CAN_SCE_IRQHandler
+    0,                      // EXTI9_5_IRQHandler
+    0,                      // TIM1_BRK_TIM15_IRQHandler
+    0,                      // TIM1_UP_TIM16_IRQHandler
+    0,                      // TIM1_TRG_COM_TIM17_IRQHandler
+    0,                      // TIM1_CC_IRQHandler
+    0,                      // TIM2_IRQHandler
+    0,                      // TIM3_IRQHandler
+    0,                      // TIM4_IRQHandler
+    0,                      // I2C1_EV_IRQHandler
+    0,                      // I2C1_ER_IRQHandler
+    0,                      // I2C2_EV_IRQHandler
+    0,                      // I2C2_ER_IRQHandler
+    0,                      // SPI1_IRQHandler
+    0,                      // SPI2_IRQHandler
+    0,                      // USART1_IRQHandler
+    0,                      // USART2_IRQHandler
+    0,                      // USART3_IRQHandler
+    0,                      // EXTI15_10_IRQHandler
+    0,                      // RTC_Alarm_IRQHandler
+    0,                      // USBWakeUp_IRQHandler
+    0,                      // TIM8_BRK_IRQHandler
+    0,                      // TIM8_UP_IRQHandler
+    0,                      // TIM8_TRG_COM_IRQHandler
+    0,                      // TIM8_CC_IRQHandler
+    0,                      // ADC3_IRQHandler
+    0,
+    0,
+    0,
+    0,                      // SPI3_IRQHandler
+    0,                      // UART4_IRQHandler
+    0,                      // UART5_IRQHandler
+    0,                      // TIM6_DAC_IRQHandler
+    0,                      // TIM7_IRQHandler
+    0,                      // DMA2_Channel1_IRQHandler
+    0,                      // DMA2_Channel2_IRQHandler
+    0,                      // DMA2_Channel3_IRQHandler
+    0,                      // DMA2_Channel4_IRQHandler
+    0,                      // DMA2_Channel5_IRQHandler
+    0,                      // ADC4_IRQHandler
+    0,
+    0,
+    0,                      // COMP1_2_3_IRQHandler
+    0,                      // COMP4_5_6_IRQHandler
+    0,                      // COMP7_IRQHandler
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,                      // USB_HP_IRQHandler
+    USB_Handler,            // USB_LP_IRQHandler
+    0,                      // USBWakeUp_RMP_IRQHandler
+    0,
+    0,
+    0,
+    0,
+    0                       // FPU_IRQHandler
+};
 #elif defined(STM32F4)
 __attribute__((used, section(".vectors")))
 const pFunc InterruptVectorTable[84] = {

@@ -39,6 +39,13 @@ void can_init(can_data_t *hcan, CAN_TypeDef *instance)
 	itd.Speed = GPIO_SPEED_FREQ_HIGH;
 	itd.Alternate = GPIO_AF4_CAN;
 	HAL_GPIO_Init(GPIOB, &itd);
+#elif defined(STM32F3)
+	itd.Pin = GPIO_PIN_0|GPIO_PIN_1;
+	itd.Mode = GPIO_MODE_AF_PP;
+	itd.Mode = GPIO_NOPULL;
+	itd.Speed = GPIO_SPEED_FREQ_HIGH;
+	itd.Alternate = GPIO_AF7_CAN;
+	HAL_GPIO_Init(GPIOD, &itd);
 #elif defined(STM32F4)
 	itd.Pin = GPIO_PIN_0|GPIO_PIN_1;
 	itd.Mode = GPIO_MODE_AF_PP;
@@ -54,6 +61,9 @@ void can_init(can_data_t *hcan, CAN_TypeDef *instance)
 #if defined(STM32F0)
 	hcan->phase_seg1 = 13;
 	hcan->phase_seg2 = 2;
+#elif defined(STM32F3)
+	hcan->phase_seg1 = 9; // todo
+	hcan->phase_seg2 = 2; // todo
 #elif defined(STM32F4)
 	hcan->phase_seg1 = 12;
 	hcan->phase_seg2 = 1;
@@ -110,7 +120,9 @@ void can_enable(can_data_t *hcan, bool loop_back, bool listen_only, bool one_sho
 
 	uint32_t filter_bit = 0x00000001;
 	can->FMR |= CAN_FMR_FINIT;
-	can->FMR &= ~CAN_FMR_CAN2SB;
+#ifndef STM32F3
+	can->FMR &= ~CAN_FMR_CAN2SB;	// TODO: comfirm this is not needed for F3
+#endif
 	can->FA1R &= ~filter_bit;        // disable filter
 	can->FS1R |= filter_bit;         // set to single 32-bit filter mode
 	can->FM1R &= ~filter_bit;        // set filter mask mode for filter 0

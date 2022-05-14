@@ -35,7 +35,10 @@ void gpio_init()
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	__HAL_RCC_GPIOC_CLK_ENABLE();
-#if defined(STM32F4)
+#if defined(STM32F3)
+	__HAL_RCC_GPIOD_CLK_ENABLE(); // CAN
+	__HAL_RCC_GPIOE_CLK_ENABLE(); // LED
+#elif defined(STM32F4)
 	__HAL_RCC_GPIOD_CLK_ENABLE();
 #endif
 
@@ -102,5 +105,13 @@ void gpio_init()
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
     HAL_GPIO_Init(USB_GPIO_Port, &GPIO_InitStruct);
+#elif defined(BOARD_STM32F3_Discovery)
+		// initialize USB pins
+		GPIO_InitStruct.Pin = USB_Pin_DM | USB_Pin_DP;
+		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Pull = GPIO_NOPULL;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+		GPIO_InitStruct.Alternate = GPIO_AF14_USB;
+		HAL_GPIO_Init(USB_GPIO_Port, &GPIO_InitStruct);
 #endif
 }

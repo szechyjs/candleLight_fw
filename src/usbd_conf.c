@@ -39,6 +39,9 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
 #elif defined(USB_OTG_FS)
 		__HAL_RCC_USB_OTG_FS_CLK_ENABLE();
 #endif
+#if defined(STM32F3)
+		__HAL_REMAPINTERRUPT_USB_ENABLE();
+#endif
 		HAL_NVIC_SetPriority(USB_INTERRUPT, 1, 0);
 		HAL_NVIC_EnableIRQ(USB_INTERRUPT);
 	}

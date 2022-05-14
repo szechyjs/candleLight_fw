@@ -74,6 +74,8 @@ void flash_flush()
 	erase_pages.PageAddress = (uint32_t)&flash_data_rom;
 	erase_pages.NbPages = 1;
 	erase_pages.TypeErase = FLASH_TYPEERASE_PAGES;
+#elif defined(STM32F3)
+	// todo
 #elif defined(STM32F4)
 	erase_pages.VoltageRange = VOLTAGE_RANGE_3;
 	erase_pages.TypeErase = FLASH_TYPEERASE_SECTORS;
@@ -84,6 +86,8 @@ void flash_flush()
 	HAL_FLASH_Unlock();
 #if defined(STM32F0)
 	__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_SR_PGERR);
+#elif defined(STM32F3)
+	// todo
 #elif defined(STM32F4)
 	__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR |
                            FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
@@ -93,6 +97,6 @@ void flash_flush()
 	if (error==0xFFFFFFFF) { // erase finished successfully
 		HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, (uint32_t)&flash_data_rom.user_id[0], flash_data_ram.user_id[0]);
 	}
-	
+
 	HAL_FLASH_Lock();
 }
